@@ -8,6 +8,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -71,8 +72,9 @@ public class User implements Serializable {
     @Column
     private String headPortrait;
 
+    @NotNull
     @Column(length = 8)
-    private String sex;
+    private String sex = "保密";
 
     /**
      * 积分
