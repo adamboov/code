@@ -84,9 +84,9 @@ public class User implements Serializable {
     /**
      * 是否VIP
      */
-    private boolean VIP = false;
+    private boolean vip = false;
 
-    private Integer VIPGrade = 0;
+    private Integer vipGrade = 0;
 
     /**
      * 账号是否被封禁

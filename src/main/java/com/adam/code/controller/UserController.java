@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.validation.Valid;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -50,6 +51,7 @@ public class UserController {
         } else {
 
             user.setPassword(CryptographyUtil.MD5(user.getPassword(), salt));
+            user.setCreateDate(new Date());
             iUserService.save(user);
             map.put("success", true);
         }
