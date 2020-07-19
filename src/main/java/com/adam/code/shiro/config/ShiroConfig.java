@@ -45,8 +45,9 @@ public class ShiroConfig {
         //  authc:   所有的URL必须认证通过才可以访问
         //  anon:   所有的URL都可以匿名访问
         filterChainDefinitionMap.put("/", "anon");
-        filterChainDefinitionMap.put("/static/*", "anon");
-        filterChainDefinitionMap.put("/ueditor/*", "anon");
+        filterChainDefinitionMap.put("/static/**", "anon");
+        filterChainDefinitionMap.put("/ueditor/**", "anon");
+        filterChainDefinitionMap.put("/upload/**", "anon");
         filterChainDefinitionMap.put("/user/register.html", "anon");
         filterChainDefinitionMap.put("/user/login.html", "anon");
         filterChainDefinitionMap.put("/user/register", "anon");
@@ -54,7 +55,7 @@ public class ShiroConfig {
         //  配置退出过滤器 其中的具体的退出代码shiro已经帮我们实现了
         filterChainDefinitionMap.put("/user/logout", "logout");
 
-        filterChainDefinitionMap.put("/**", "anthc");
+        filterChainDefinitionMap.put("/**", "authc");
 
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
 
