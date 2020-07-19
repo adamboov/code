@@ -52,6 +52,7 @@ public class UserController {
 
             user.setPassword(CryptographyUtil.MD5(user.getPassword(), salt));
             user.setCreateDate(new Date());
+            user.setLastDate(new Date());
             iUserService.save(user);
             map.put("success", true);
         }
