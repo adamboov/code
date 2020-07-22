@@ -18,4 +18,12 @@ spring:
 
 # 个人配置文件  比如加盐的盐
 personConfig:
+#  加密用盐
   salt: adam
+
+# 邮箱工具类配置信息
+  mail:
+    host: smtp.qq.com
+    port: 587
+    username: 123456789@qq.com
+    password: asamjkjfkda

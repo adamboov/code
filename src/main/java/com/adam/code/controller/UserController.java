@@ -1,6 +1,7 @@
 package com.adam.code.controller;
 
 import com.adam.code.entity.User;
+import com.adam.code.enums.Consts;
 import com.adam.code.service.IUserService;
 import com.adam.code.util.CryptographyUtil;
 import com.adam.code.util.StringUtils;
@@ -83,19 +84,33 @@ public class UserController {
         } else if (StringUtils.isEmpty(user.getPassword())) {
 
             map.put("success", false);
-            map.put("errorInfo", "请输入用户名！");
+            map.put("errorInfo", "请输入密码名！");
         } else {
             //  登录验证
             Subject subject = SecurityUtils.getSubject();
             UsernamePasswordToken token = new UsernamePasswordToken(user.getUserName(), CryptographyUtil.MD5(user.getPassword(), salt));
-            subject.login(token);
-            String userName = (String) SecurityUtils.getSubject().getPrincipal();
-            User currentUser = iUserService.findByUserName(userName);
-            if (currentUser.isOff()) {
+
+            try {
+                subject.login(token);
+                String userName = (String) SecurityUtils.getSubject().getPrincipal();
+                User currentUser = iUserService.findByUserName(userName);
+                if (currentUser.isOff()) {
+                    map.put("success", false);
+                    map.put("errorInfo", "该用户已被暂停使用，请联系管理员！");
+                    subject.logout();
+                } else {
+                    currentUser.setLastDate(new Date());
+                    iUserService.save(currentUser);
+                    session.setAttribute(Consts.CURRENT_USER, currentUser);
+                    map.put("success", true);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
                 map.put("success", false);
-                map.put("errorInfo", "该用户已被暂停使用，请联系管理员！");
+                map.put("errorInfo", "用户名或密码错误！");
             }
+
         }
-            return null;
+        return map;
     }
 }
